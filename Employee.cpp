@@ -6,12 +6,14 @@ Employee::Employee() {
     this->name = new String("");
     this->surname = new String("");
     this->position = new String("");
+    this->education = new String("");
 }
 
-Employee::Employee(const String & name, const String & surname, const String & position, const Date & birthDate, const Date & employmentDate, const float & salary) {
+Employee::Employee(const String & name, const String & surname, const String & position, const String & education, const Date & birthDate, const Date & employmentDate, const float & salary) {
     this->name = new String(name);
     this->surname = new String(surname);
     this->position = new String(position);
+    this->education = new String(education);
 
     this->birthDate = birthDate;
     this->employmentDate = employmentDate;
@@ -23,6 +25,7 @@ Employee::Employee(const Employee & copy) {
     this->name = new String(*copy.name);
     this->surname = new String(*copy.surname);
     this->position = new String(*copy.position);
+    this->education = new String(*copy.education);
 
     this->birthDate = copy.birthDate;
     this->employmentDate = copy.employmentDate;
@@ -31,8 +34,8 @@ Employee::Employee(const Employee & copy) {
 }
 
 Employee::~Employee() {
-    delete name; delete surname; delete position;
-    name = surname = position = nullptr;
+    delete name; delete surname; delete position; delete education;
+    name = surname = position = education = nullptr;
     birthDate = Date();
     employmentDate = Date();
     salary = 0.0;
@@ -41,12 +44,15 @@ Employee::~Employee() {
 void Employee::print_info() const {
     cout << "\t Full name: "; name->print(); cout << " "; surname->print(); cout << " \n";
     cout << "\t Position: "; position->print(); cout << endl;
+    cout << "\t Education: "; education->print(); cout << endl;
     cout << "\t Date of birth: "; birthDate.print_date();
     cout << "\t Date of employment: "; employmentDate.print_date();
     cout << "\t Salary: " << salary << endl;
 }
 
 void Employee::set_position(const String & position) { *this->position = position; }
+
+void Employee::set_education(const String & education) { *this->education = education; }
 
 void Employee::set_salary(const float & salary) { this->salary = salary; }
 
