@@ -22,6 +22,8 @@ public:
     ~String();
 
 
+    const bool operator==(const String &);
+
     const size_t length() const;
     void print() const;
 

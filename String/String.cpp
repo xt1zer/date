@@ -10,7 +10,7 @@ String::String(const char str[]) : m_len(strlen(str)) {
     copy(str, 0);
 }
 
-String::String(const String& copyStr) : m_len(copyStr.m_len) {
+String::String(const String & copyStr) : m_len(copyStr.m_len) {
     m_str = new char[copyStr.m_len + 1];
 
     copy(copyStr.m_str, 0);
@@ -23,7 +23,23 @@ String::~String() {
     m_str = nullptr;
 }
 
-void String::copy(const char s[], const size_t& pos) {
+const bool String::operator==(const String & rhs) {
+    int i(0);
+
+    while (i < m_len - 1 && i < rhs.m_len - 1) {
+        if (m_str[i] != rhs.m_str[i])
+            return false;
+
+        ++i;
+    }
+
+    if (m_len != rhs.m_len)
+        return false;
+
+    return true;
+}
+
+void String::copy(const char s[], const size_t & pos) {
     if (m_len - pos < strlen(s))
         return;
 
@@ -31,7 +47,7 @@ void String::copy(const char s[], const size_t& pos) {
         m_str[i] = s[i - pos];
 }
 
-String* String::divide(const char delim[], const size_t& count) const {
+String* String::divide(const char delim[], const size_t & count) const {
     char src[m_len + 1];
     strcpy(src, m_str);
 
@@ -76,11 +92,11 @@ void String::append(const char s[]) {
     copy(s, m_len - strlen(s));
 }
 
-void String::append(const String& s) {
+void String::append(const String & s) {
     append(s.m_str);
 }
 
-String String::substr(const unsigned int& pos, const unsigned int& num) const {
+String String::substr(const unsigned int & pos, const unsigned int & num) const {
     if (m_len - pos < num)
         return String("");
 
@@ -92,7 +108,7 @@ String String::substr(const unsigned int& pos, const unsigned int& num) const {
     return String(res);
 }
 
-String* String::split(const char& delim) const {
+String* String::split(const char & delim) const {
     if (strchr(m_str, delim)) {
         size_t count = 0;
 
