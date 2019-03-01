@@ -1,5 +1,6 @@
 #include "Employee.h"
 #include <iostream>
+#include <algorithm>
 using std::cout, std::endl;
 
 Employee::Employee() {
@@ -9,10 +10,11 @@ Employee::Employee() {
     this->education = new String("");
 }
 
-Employee::Employee(const String & name, const String & surname, const String & position, const String & education, const Date & birthDate, const Date & employmentDate, const float & salary) {
+Employee::Employee(const String & name, const String & surname, const String & position, const String & rank, const String & education, const Date & birthDate, const Date & employmentDate, const float & salary) {
     this->name = new String(name);
     this->surname = new String(surname);
     this->position = new String(position);
+    this->rank = new String(rank);
     this->education = new String(education);
 
     this->birthDate = birthDate;
@@ -25,6 +27,7 @@ Employee::Employee(const Employee & copy) {
     this->name = new String(*copy.name);
     this->surname = new String(*copy.surname);
     this->position = new String(*copy.position);
+    this->rank = new String(*copy.rank);
     this->education = new String(*copy.education);
 
     this->birthDate = copy.birthDate;
@@ -34,7 +37,7 @@ Employee::Employee(const Employee & copy) {
 }
 
 Employee::~Employee() {
-    delete name; delete surname; delete position; delete education;
+    delete name; delete surname; delete position; delete rank; delete education;
     name = surname = position = education = nullptr;
     birthDate = Date();
     employmentDate = Date();
@@ -43,7 +46,7 @@ Employee::~Employee() {
 
 void Employee::print_info() const {
     cout << "\t Full name: "; name->print(); cout << " "; surname->print(); cout << " \n";
-    cout << "\t Position: "; position->print(); cout << endl;
+    cout << "\t Position: "; rank->print(); position->print(); cout << endl;
     cout << "\t Education: "; education->print(); cout << endl;
     cout << "\t Date of birth: "; birthDate.print_date();
     cout << "\t Date of employment: "; employmentDate.print_date();
@@ -95,4 +98,20 @@ void Employee::set_salary_by_exp(const Date & today) {
 
     else if (experience >= 30)
         salary += salary / 100 * 15;
+}
+
+void Employee::set_salary_by_rank() {
+    if (*rank == "Head ")
+        salary += salary / 100 * 20;
+
+    else if (*rank == "Junior ")
+        salary -= salary / 100 * 2;
+}
+
+void sort_by_birth(Employee * array, const int & num) {
+    std::sort(array, array + (num - 1), [](const Employee & a, const Employee & b) -> bool { return a.birthDate < b.birthDate; });
+}
+
+void sort_by_hiring(Employee * array, const int & num) {
+    std::sort(array, array + (num - 1), [](const Employee & a, const Employee & b) -> bool { return a.employmentDate < b.employmentDate; });
 }

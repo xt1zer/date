@@ -4,11 +4,15 @@
 
 class Employee {
 
+    friend void sort_by_birth(Employee * array, const int & num);
+    friend void sort_by_hiring(Employee * array, const int & num);
+
 private:
 
     String * name;
     String * surname;
     String * position;
+    String * rank;
     String * education;
     Date birthDate;
     Date employmentDate;
@@ -17,7 +21,7 @@ private:
 public:
 
     Employee();// = default;
-    Employee(const String & name, const String & surname, const String & position, const String & education, const Date & birthDate, const Date & employmentDate, const float & salary);
+    Employee(const String & name, const String & surname, const String & position, const String & rank, const String & education, const Date & birthDate, const Date & employmentDate, const float & salary);
     Employee(const Employee &);
     ~Employee();
 
@@ -28,5 +32,6 @@ public:
     const short int compute_age(const Date & today) const;
     const short int compute_experience(const Date & today) const;
     void set_salary_by_exp(const Date & today);
+    void set_salary_by_rank();
 
 };
