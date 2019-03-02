@@ -12,7 +12,7 @@ private:
     String * name;
     String * surname;
     String * position;
-    String * rank;
+    String * rank; // "Head", "Junior" and so on
     String * education;
     Date birthDate;
     Date employmentDate;
@@ -20,7 +20,7 @@ private:
 
 public:
 
-    Employee();// = default;
+    Employee();// = default; // just nulls
     Employee(const String & name, const String & surname, const String & position, const String & rank, const String & education, const Date & birthDate, const Date & employmentDate, const float & salary);
     Employee(const Employee &);
     ~Employee();
