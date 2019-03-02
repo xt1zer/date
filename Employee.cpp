@@ -4,7 +4,7 @@
 using std::cout, std::endl;
 
 Employee::Employee() {
-    this->name = new String("");
+    this->name = new String(""); // prolly same as String()
     this->surname = new String("");
     this->position = new String("");
     this->education = new String("");
