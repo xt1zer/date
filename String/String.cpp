@@ -2,11 +2,11 @@
 #include <iostream>
 
 String::String() : m_len(0) {
-    m_str = new char[0];
+    m_str = new char[0]; // it's empty, right?
 }
 
 String::String(const char str[]) : m_len(strlen(str)) {
-    m_str = new char[m_len + 1];
+    m_str = new char[m_len + 1]; // '\0' char at the end
     copy(str, 0);
 }
 
@@ -27,20 +27,20 @@ const bool String::operator==(const String & rhs) {
     int i(0);
 
     while (i < m_len - 1 && i < rhs.m_len - 1) {
-        if (m_str[i] != rhs.m_str[i])
+        if (m_str[i] != rhs.m_str[i]) // if any char mismatches then knock if off
             return false;
 
         ++i;
     }
 
-    if (m_len != rhs.m_len)
+    if (m_len != rhs.m_len) // if strings match, but lengths unequal
         return false;
 
     return true;
 }
 
 void String::copy(const char s[], const size_t & pos) {
-    if (m_len - pos < strlen(s))
+    if (m_len - pos < strlen(s)) // length overflow
         return;
 
     for (size_t i(pos); i <= m_len; ++i)
@@ -51,9 +51,11 @@ String* String::divide(const char delim[], const size_t & count) const {
     char src[m_len + 1];
     strcpy(src, m_str);
 
-    String* words = new String[count];
+    String * words = new String[count];
 
-    char* token = strtok(src, delim);
+    // all part until [for] is needed for first word until delimeter
+    
+    char * token = strtok(src, delim);
     delete[] words[0].m_str;
     words[0].m_len = strlen(token);
     words[0].m_str = new char[words[0].m_len + 1];
@@ -92,12 +94,12 @@ void String::append(const char s[]) {
     copy(s, m_len - strlen(s));
 }
 
-void String::append(const String & s) {
+void String::append(const String & s) { // different parameter
     append(s.m_str);
 }
 
 String String::substr(const unsigned int & pos, const unsigned int & num) const {
-    if (m_len - pos < num)
+    if (m_len - pos < num) // length overflow
         return String("");
 
     char res[num + 1];
@@ -108,7 +110,7 @@ String String::substr(const unsigned int & pos, const unsigned int & num) const 
     return String(res);
 }
 
-String* String::split(const char & delim) const {
+String * String::split(const char & delim) const {
     if (strchr(m_str, delim)) {
         size_t count = 0;
 
@@ -117,15 +119,15 @@ String* String::split(const char & delim) const {
                 ++count;
         }
 
-        const char delims[] = {delim, '\0'};
+        const char delims[] = { delim, '\0' };
         return divide(delims, ++count);
     }
 }
 
 void String::replace(const char from[], const char to[]) {
-    char* str = strstr(m_str, from);
+    char * str = strstr(m_str, from);
 
-    if (strstr(m_str, from)) {
+    if (strstr(m_str, from)) { // hell of a job
         char afterStr[strlen(str) - strlen(from) + 1];
         strcpy(afterStr, &str[strlen(from)]);
 
